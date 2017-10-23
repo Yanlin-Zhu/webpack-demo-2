@@ -51,7 +51,38 @@ module.exports = {
 				test:/\.ejs$/,
 				use:['ejs-loader']
 
+			},
+			// 处理图片文件
+			// 模板中img图片
+			// <img src="${require('../../assets/3-5.png')}">
+			// css背景图片
+			// npm install file-loader --save-dev
+			// {
+			// 	test:/\.(png|jpg|gif|svg)$/i,
+			// 	use:[{
+			// 		loader: 'file-loader',
+			// 		// 改变打包后图片地址
+			// 	  	options: {
+			// 			name: 'assets/[name]-[hash:5].[ext]'
+			// 		}
+			// 	}]
+			// }
+			// npm install url-loader --save-dev
+			// 图片或文件大小在范围内转成base64位编码，超出范围采用file-loader
+			{
+				test:/\.(png|jpg|gif|svg)$/i,
+				use:[{
+					loader: 'url-loader',
+					// 改变打包后图片地址
+				  	options: {
+					  		limit:20000,//20k
+							name: 'assets/[name]-[hash:5].[ext]'
+						}
+					},
+					'image-webpack-loader'
+				]
 			}
+			// npm install image-webpack-loader --save-dev图片压缩
 		]
 	},
 	// 单页面应用
